@@ -31,9 +31,10 @@
                             Categories
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarCategoriesDropdown">
-                            <a class="dropdown-item" href="#">Equipment</a>
-                            <a class="dropdown-item" href="#">Nutrition</a>
-                            <a class="dropdown-item" href="#">Merchandise</a>
+                            <a class="dropdown-item" href="?category=equipment">Equipment</a>
+                            <a class="dropdown-item" href="?category=nutrition">Nutrition</a>
+                            <a class="dropdown-item" href="?category=merchandise">Merchandise</a>
+                            <a class="dropdown-item" href="{% url 'product_page' %}">All Products</a>
                         </div>
                     </li>
                 </ul>
@@ -72,6 +73,7 @@
         {% endfor %}
     </div>
 </section>
+
 
 {% endblock %}
 
