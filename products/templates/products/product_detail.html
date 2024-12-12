@@ -25,6 +25,18 @@
             
             {% if product.has_sizes %}
                 <p><strong>Available in different sizes!</strong></p>
+                
+                <!-- Size Selector Dropdown -->
+                <div class="form-group">
+                    <label for="size">Size</label>
+                    <select id="size" name="size" class="form-control">
+                        <option value="xs">XS</option>
+                        <option value="s">S</option>
+                        <option value="m" selected>M</option>
+                        <option value="l">L</option>
+                        <option value="xl">XL</option>
+                    </select>
+                </div>
             {% else %}
                 <p><strong>No sizes available.</strong></p>
             {% endif %}
@@ -42,7 +54,7 @@
                         </button>
                         
                         <!-- Quantity Input -->
-                        <input type="number" id="quantity" name="quantity" class="form-control" value="1" min="1" max="99">
+                        <input type="number" id="quantity" name="quantity" class="form-control custom-input" value="1" min="1" max="99">
                         
                         <!-- Increment Button with Font Awesome Icon -->
                         <button type="button" class="btn btn-outline-secondary" id="incrementBtn">
@@ -51,7 +63,7 @@
                     </div>
                 </div>
                 
-                <button type="submit" class="btn btn-primary">Add to Cart</button>
+                <button type="submit" class="btn btn-primary">Add to Bag</button>
             </form>
         </div>
     </div>

@@ -90,4 +90,7 @@ body{
     border-color: #cc7a00;
 }
 
+.form-control {
+    border-radius: 10px;
+}
 
