@@ -77,12 +77,17 @@ body{
     margin-bottom: 20px;
 }
 
-.view-details-btn {
+.view-details-btn,
+.btn-outline-secondary{
     background-color: #333333;
     border-color: #333333;
+    color: white;
 }
 
-.view-details-btn:hover {
+.view-details-btn:hover,
+.btn-outline-secondary:hover {
     background-color: #cc7a00;
     border-color: #cc7a00;
 }
+
+
