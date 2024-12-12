@@ -36,7 +36,7 @@
                 Elevate
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i> 
+                <i class="fas fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
@@ -52,6 +52,17 @@
                     <li class="nav-item {% if request.path == '/community/' %}active{% endif %}">
                         <a class="nav-link" href="#">Community</a>
                     </li>
+    
+                    <!-- New Bag Link -->
+                    <li class="nav-item {% if request.path == '/bag/' %}active{% endif %}">
+                        <a class="nav-link" href="{% url 'view_bag' %}">
+                            <i class="fas fa-shopping-bag"></i> Bag
+                            {% if request.user.bag.items.count > 0 %}
+                                <span class="badge badge-pill badge-light">{{ request.user.bag.items.count }}</span>
+                            {% endif %}
+                        </a>
+                    </li>
+    
                     {% if user and user.is_authenticated %}
                         <li class="nav-item {% if request.path == '/profile/' %}active{% endif %}">
                             <a class="nav-link" href="#">Profile</a>
