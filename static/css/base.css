@@ -71,19 +71,18 @@ body{
     color: #666666;
 }
 
-/* Button Styles */
-.btn-primary {
-    background-color: #004aad;
-    border-color: #004aad;
-}
-
-.btn-primary:hover {
-    background-color: #003a8c;
-    border-color: #003a8c;
-}
-
 /* Product Grid */
 .container .row {
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+.view-details-btn {
+    background-color: #333333;
+    border-color: #333333;
+}
+
+.view-details-btn:hover {
+    background-color: #cc7a00;
+    border-color: #cc7a00;
 }

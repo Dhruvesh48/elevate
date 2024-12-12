@@ -18,10 +18,10 @@
                             Sort By
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarSorting">
-                            <a class="dropdown-item" href="#">Price: Low to High</a>
-                            <a class="dropdown-item" href="#">Price: High to Low</a>
-                            <a class="dropdown-item" href="#">Rating: High to Low</a>
-                            <a class="dropdown-item" href="#">Rating: Low to High</a>
+                            <a class="dropdown-item" href="?sort_by=price_low_to_high">Price: Low to High</a>
+                            <a class="dropdown-item" href="?sort_by=price_high_to_low">Price: High to Low</a>
+                            <a class="dropdown-item" href="?sort_by=rating_high_to_low">Rating: High to Low</a>
+                            <a class="dropdown-item" href="?sort_by=rating_low_to_high">Rating: Low to High</a>
                         </div>
                     </li>
 
@@ -57,15 +57,21 @@
                         <h5 class="card-title">{{ product.name }}</h5>
                         <p class="card-text">${{ product.price }}</p>
                         <p class="card-text">{{ product.description|truncatewords:15 }}</p>
-                        <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">View Details</a>
+                        
+                        <!-- Display Rating -->
+                        {% if product.rating %}
+                            <p class="card-text">
+                                <strong>Rating:</strong> {{ product.rating }} / 5
+                            </p>
+                        {% endif %}
+
+                        <a href="{% url 'product_detail' product.id %}" class="btn btn-primary view-details-btn mt-2">View Details</a>
                     </div>
                 </div>
             </div>
         {% endfor %}
     </div>
 </section>
-
-
 
 {% endblock %}
 
