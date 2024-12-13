@@ -54,14 +54,19 @@
                     </li>
     
                     <!-- New Bag Link -->
-                    <li class="nav-item {% if request.path == '/bag/' %}active{% endif %}">
-                        <a class="nav-link" href="{% url 'view_bag' %}">
-                            <i class="fas fa-shopping-bag"></i> Bag
-                            {% if request.user.bag.items.count > 0 %}
-                                <span class="badge badge-pill badge-light">{{ request.user.bag.items.count }}</span>
-                            {% endif %}
-                        </a>
-                    </li>
+                    {% if grand_total %}
+                        <li class="nav-item {% if request.path == '/bag/' %}active{% endif %}">
+                            <a class="nav-link position-relative" href="{% url 'view_bag' %}">
+                                <i class="fas fa-shopping-bag"></i> Bag
+                                {% if product_count > 0 %}
+                                    <!-- Red Notification Badge -->
+                                    <span class="badge badge-pill badge-danger position-absolute">
+                                        {{ product_count }}
+                                    </span>
+                                {% endif %}
+                            </a>
+                        </li>
+                    {% endif %}
     
                     {% if user and user.is_authenticated %}
                         <li class="nav-item {% if request.path == '/profile/' %}active{% endif %}">
@@ -80,6 +85,25 @@
         </div>
     </nav>
 
+    {% if messages %}
+        <div class="message-container">
+            {% for message in messages %}
+                {% with message.level as level %}
+                    {% if level == 40 %}
+                        {% include 'includes/toasts/toast_error.html' %}
+                    {% elif level == 30 %}
+                        {% include 'includes/toasts/toast_warning.html' %}
+                    {% elif level == 25 %}
+                        {% include 'includes/toasts/toast_success.html' %}
+                    {% else %}
+                        {% include 'includes/toasts/toast_info.html' %}
+                    {% endif %}
+                {% endwith %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+
     <main class="container mt-4">
         {% block content %}
         {% endblock %}
@@ -91,6 +115,9 @@
         {% endblock %}
     </footer>
     {% block postloadjs %}
+    <script type="text/javascript">
+        $('.toast').toast('show');
+    </script>
     {% endblock %}
   </body>
 </html>
