@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from products.models import Product
 
 # Create your views here.
 def view_bag(request):
@@ -8,32 +9,30 @@ def view_bag(request):
 
 
 def add_to_bag(request, item_id):
-    """ Add a product to the shopping bag with quantity and size (if applicable) """
-
-    quantity = int(request.POST.get('quantity', 1))  # Default quantity is 1
-    size = request.POST.get('product_size', None)  # Get size if provided, else None
-    print(request.POST.get('product_size'))
-    redirect_url = request.POST.get('redirect_url', '/')  # Default redirect to home
-
-    # Retrieve the shopping bag from the session
+    """ Add a quantity of the specified product to the shopping bag """
+    
+    product = get_object_or_404(Product, pk=item_id)
+    quantity = int(request.POST.get('quantity'))
+    redirect_url = request.POST.get('redirect_url')
+    size = None
+    if 'product_size' in request.POST:
+        size = request.POST['product_size']
     bag = request.session.get('bag', {})
 
-    if size:  # If the product has a size selected
-        if item_id in bag:
-            if 'items_by_size' not in bag[item_id]:
-                bag[item_id]['items_by_size'] = {}
-            if size in bag[item_id]['items_by_size']:
+    if size:
+        if item_id in list(bag.keys()):
+            if size in bag[item_id]['items_by_size'].keys():
                 bag[item_id]['items_by_size'][size] += quantity
             else:
                 bag[item_id]['items_by_size'][size] = quantity
+                
         else:
             bag[item_id] = {'items_by_size': {size: quantity}}
-    else:  # If no size is selected
-        if item_id in bag:
+    else:
+        if item_id in list(bag.keys()):
             bag[item_id] += quantity
         else:
             bag[item_id] = quantity
 
-    # Save the updated bag in the session
     request.session['bag'] = bag
     return redirect(redirect_url)

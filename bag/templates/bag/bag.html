@@ -3,48 +3,85 @@
 
 {% block content %}
 <section class="container py-5">
-    <h2 class="text-center">Shopping Bag</h2>
+    <h2 class="text-center mb-4">Your Shopping Bag</h2>
     
     {% if not bag_items %}
-        <p>Your shopping bag is empty.</p>
+        <p class="text-center">Your shopping bag is empty.</p>
+        <div class="text-center mt-3">
+            <a href="{% url 'product_page' %}" class="btn btn-outline-primary">Continue Shopping</a>
+        </div>
     {% else %}
-        <table class="table table-responsive-sm">
-            <thead>
-                <tr>
-                    <th>Image</th>
-                    <th>Product</th>
-                    <th>Size</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in bag_items %}
-                <tr>
-                    <td>
-                        {% if item.product.image %}
-                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-thumbnail product-image">
-                        {% else %}
-                            <img src="{{ MEDIA_URL }}noimage.png" alt="No Image" class="img-thumbnail product-image">
-                        {% endif %}
-                    </td>
-                    <td>{{ item.product.name }}</td>
-                    <td>
-                        {% if item.product.has_sizes %}
-                            {{ item.product_size|upper }}
-                        {% else %}
-                            N/A
-                        {% endif %}
-                    </td>
-                    <td>{{ item.quantity }}</td>
-                    <td>${{ item.product.price }}</td>
-                    <td>${{ item.quantity|floatformat:2|add:item.product.price|floatformat:2 }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Product</th>
+                        <th>Size</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in bag_items %}
+                    <tr>
+                        <!-- Product Image -->
+                        <td>
+                            {% if item.product.image %}
+                                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-thumbnail product-image">
+                            {% else %}
+                                <img src="{{ MEDIA_URL }}noimage.png" alt="No Image" class="img-thumbnail product-image">
+                            {% endif %}
+                        </td>
 
+                        <!-- Product Name -->
+                        <td>{{ item.product.name }}</td>
+
+                        <!-- Size -->
+                        <td>
+                            {% if item.product.has_sizes %}
+                                {{ item.size|upper }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+
+                        <!-- Quantity -->
+                        <td>
+                            <form method="POST" class="quantity-form">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <!-- Decrement Button -->
+                                        <button type="button" class="btn btn-outline-secondary" id="decrementBtn_{{ item.item_id }}">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        
+                                        <!-- Quantity Input -->
+                                        <input type="number" id="quantity_{{ item.item_id }}" name="quantity" class="form-control custom-input" value="{{ item.quantity }}" min="1" max="99">
+                                        
+                                        <!-- Increment Button -->
+                                        <button type="button" class="btn btn-outline-secondary" id="incrementBtn_{{ item.item_id }}">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </td>
+
+                        <!-- Price -->
+                        <td>${{ item.product.price }}</td>
+
+                        <!-- Total -->
+                        <td>${{ item.quantity|floatformat:2|add:item.product.price|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Order Summary -->
         <div class="mt-4">
             <h5>Order Summary:</h5>
             <p><strong>Subtotal:</strong> ${{ total|floatformat:2 }}</p>
@@ -61,14 +98,16 @@
             <h4><strong>Grand Total:</strong> ${{ grand_total|floatformat:2 }}</h4>
         </div>
 
-        <div class="mt-3">
-            <a href="#" class="btn btn-primary">Proceed to Checkout</a>
+        <!-- Actions -->
+        <div class="mt-3 d-flex justify-content-between">
             <a href="{% url 'product_page' %}" class="btn btn-outline-secondary">Continue Shopping</a>
+            <a href="#" class="btn btn-primary">Proceed to Checkout</a>
         </div>
     {% endif %}
 </section>
+{% endblock %}
 
-
-
-
+{% block postloadjs %}
+{{ block.super }}
+{% include 'products/includes/quantity_input_script.html' %}
 {% endblock %}
