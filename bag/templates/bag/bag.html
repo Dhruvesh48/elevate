@@ -50,29 +50,38 @@
 
                         <!-- Quantity -->
                         <td>
-                            <form method="POST" class="quantity-form" action="{% url 'update_bag_item' item.item_id %}">
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <!-- Decrement Button -->
-                                        <button type="button" class="btn btn-outline-secondary" id="decrementBtn_{{ item.item_id }}">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                        
-                                        <!-- Quantity Input -->
-                                        <input type="number" id="quantity_{{ item.item_id }}" name="quantity" class="form-control custom-input" value="{{ item.quantity }}" min="1" max="99">
-                                        
-                                        <!-- Increment Button -->
-                                        <button type="button" class="btn btn-outline-secondary" id="incrementBtn_{{ item.item_id }}">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                        {% if item.product.has_sizes %}
-                                            <input type="hidden" name="product_size" value="{{ item.size }}">
-                                        {% endif %}
+                            <div class="d-flex justify-content-between">
+                                <form method="POST" class="quantity-form" action="{% url 'update_bag_item' item.item_id %}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <!-- Decrement Button -->
+                                            <button type="button" class="btn btn-outline-secondary" id="decrementBtn_{{ item.item_id }}">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            
+                                            <!-- Quantity Input -->
+                                            <input type="number" id="quantity_{{ item.item_id }}" name="quantity" class="form-control custom-input" value="{{ item.quantity }}" min="1" max="99">
+                                            
+                                            <!-- Increment Button -->
+                                            <button type="button" class="btn btn-outline-secondary" id="incrementBtn_{{ item.item_id }}">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                            {% if item.product.has_sizes %}
+                                                <input type="hidden" name="product_size" value="{{ item.size }}">
+                                            {% endif %}
+                                        </div>
                                     </div>
-                                </div>
-                                <button type="submit" class="btn btn-outline-secondary mt-3">Update</button>
-                            </form>
+                                    <button type="submit" class="btn btn-outline-secondary mt-3">Update</button>
+                                </form>
+                                <form method="POST" action="{% url 'remove_from_bag' item.item_id %}">
+                                    {% csrf_token %}
+                                    {% if item.product.has_sizes %}
+                                        <input type="hidden" name="product_size" value="{{ item.size }}">
+                                    {% endif %}
+                                    <button type="submit" class="btn btn-outline-secondary mt-3">Remove</button>
+                                </form>
+                            </div>
                         </td>
 
                         <!-- Price -->
