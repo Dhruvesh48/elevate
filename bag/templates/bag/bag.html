@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load bag_tools %}
 
 {% block content %}
 <section class="container py-5">
@@ -8,7 +9,7 @@
     {% if not bag_items %}
         <p class="text-center">Your shopping bag is empty.</p>
         <div class="text-center mt-3">
-            <a href="{% url 'product_page' %}" class="btn btn-outline-primary">Continue Shopping</a>
+            <a href="{% url 'product_page' %}" class="btn btn-outline-secondary">Continue Shopping</a>
         </div>
     {% else %}
         <div class="table-responsive">
@@ -49,7 +50,7 @@
 
                         <!-- Quantity -->
                         <td>
-                            <form method="POST" class="quantity-form">
+                            <form method="POST" class="quantity-form" action="{% url 'update_bag_item' item.item_id %}">
                                 {% csrf_token %}
                                 <div class="form-group">
                                     <div class="input-group">
@@ -65,8 +66,12 @@
                                         <button type="button" class="btn btn-outline-secondary" id="incrementBtn_{{ item.item_id }}">
                                             <i class="fas fa-plus"></i>
                                         </button>
+                                        {% if item.product.has_sizes %}
+                                            <input type="hidden" name="product_size" value="{{ item.size }}">
+                                        {% endif %}
                                     </div>
                                 </div>
+                                <button type="submit" class="btn btn-outline-secondary mt-3">Update</button>
                             </form>
                         </td>
 
@@ -74,7 +79,7 @@
                         <td>${{ item.product.price }}</td>
 
                         <!-- Total -->
-                        <td>${{ item.quantity|floatformat:2|add:item.product.price|floatformat:2 }}</td>
+                        <td>${{ item.product.price | calc_subtotal:item.quantity }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
