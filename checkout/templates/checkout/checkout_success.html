@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'checkout/css/checkout_success.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="checkout-success-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="success-title">Thank You for Your Order!</h1>
+                <p class="order-number">Your order number is <strong>{{ order.order_number }}</strong></p>
+                <p class="confirmation-text">
+                    A confirmation email has been sent to <strong>{{ order.email }}</strong>. 
+                    Please keep this email for your records.
+                </p>
+                <a href="{% url 'product_page' %}" class="btn btn-outline-secondary mt-3">Continue Shopping</a>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12 col-lg-8 mx-auto">
+                <h2 class="order-summary-title">Order Summary</h2>
+                <div class="order-summary-container">
+                    <p><strong>Order Total:</strong> ${{ order.order_total|floatformat:2 }}</p>
+                    <p><strong>Delivery Charge:</strong> ${{ order.delivery_cost|floatformat:2 }}</p>
+                    <p><strong>Grand Total:</strong> ${{ order.grand_total|floatformat:2 }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

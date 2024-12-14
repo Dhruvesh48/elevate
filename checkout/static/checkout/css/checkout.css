@@ -40,3 +40,31 @@
     object-fit: cover;
     border-radius: 5px;
 }
+
+.checkout-success-page {
+  margin-top: 50px;
+}
+
+.success-title {
+  font-size: 2.5rem;
+  color: #28a745;
+  font-weight: bold;
+}
+
+.order-number {
+  font-size: 1.2rem;
+  color: #6c757d;
+}
+
+.confirmation-text {
+  margin-top: 10px;
+  font-size: 1rem;
+  color: #555;
+}
+
+.order-summary-title {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
