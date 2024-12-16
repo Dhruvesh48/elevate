@@ -82,22 +82,22 @@
                             {{ order_form.phone_number|as_crispy_field }}
                         </div>
                         <div class="form-group">
-                            {{ order_form.country|as_crispy_field }}
-                        </div>
-                        <div class="form-group">
-                            {{ order_form.postcode|as_crispy_field }}
-                        </div>
-                        <div class="form-group">
-                            {{ order_form.town_or_city|as_crispy_field }}
-                        </div>
-                        <div class="form-group">
                             {{ order_form.street_address1|as_crispy_field }}
                         </div>
                         <div class="form-group">
                             {{ order_form.street_address2|as_crispy_field }}
                         </div>
                         <div class="form-group">
+                            {{ order_form.town_or_city|as_crispy_field }}
+                        </div>
+                        <div class="form-group">
                             {{ order_form.county|as_crispy_field }}
+                        </div>
+                        <div class="form-group">
+                            {{ order_form.postcode|as_crispy_field }}
+                        </div>
+                        <div class="form-group">
+                            {{ order_form.country|as_crispy_field }}
                         </div>
                         <div class="form-check">
                             {% if user.is_authenticated %}
