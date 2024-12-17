@@ -1,31 +1,36 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'user/css/user.css' %}">
+{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
     <div class="row">
         <!-- Sidebar Section -->
         <div class="col-md-4">
-            <div class="card shadow-sm mb-4">
+            <div class="card shadow-sm profile-card">
                 <div class="card-body text-center">
-                    <h4 class="card-title">{{ user.username }}</h4>
-                    <p class="text-muted">{{ user.email }}</p>
-                    <a href="{% url 'account_logout' %}" class="btn btn-danger btn-sm">Logout</a>
+                    <h4 class="card-title profile-username">{{ user.username }}</h4>
+                    <p class="text-muted profile-email">{{ user.email }}</p>
+                    <a href="{% url 'account_logout' %}" class="btn view-details-btn btn-sm">Logout</a>
                 </div>
             </div>
 
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
+            <div class="card shadow-sm quick-links-card">
+                <div class="card-header quick-links-header">
                     Quick Links
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <a href="{% url 'home' %}" class="text-decoration-none">Home</a>
+                <ul class="list-group list-group-flush quick-links-list">
+                    <li class="list-group-item quick-link-item">
+                        <a href="{% url 'home' %}">Home</a>
                     </li>
-                    <li class="list-group-item">
-                        <a href="{% url 'view_bag' %}" class="text-decoration-none">My Bag</a>
+                    <li class="list-group-item quick-link-item">
+                        <a href="{% url 'view_bag' %}">View Bag</a>
                     </li>
-                    <li class="list-group-item">
-                        <a href="{% url 'product_page' %}" class="text-decoration-none">Shop Products</a>
+                    <li class="list-group-item quick-link-item">
+                        <a href="{% url 'profile' %}">Edit Profile</a>
                     </li>
                 </ul>
             </div>
@@ -33,78 +38,50 @@
 
         <!-- Profile Details Section -->
         <div class="col-md-8">
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    Your Profile
+            <div class="card shadow-sm profile-details-card">
+                <div class="card-header profile-details-header">
+                    Your Details
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="#">
+                    <form method="POST">
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="default_phone_number">Phone Number</label>
-                            <input type="text" class="form-control" id="default_phone_number" name="default_phone_number" value="{{ profile.default_phone_number }}">
+                            <input type="text" class="form-control" id="default_phone_number" name="default_phone_number" 
+                                   value="{{ user.userprofile.default_phone_number }}">
                         </div>
-
-                        <div class="form-group">
-                            <label for="default_street_address1">Street Address 1</label>
-                            <input type="text" class="form-control" id="default_street_address1" name="default_street_address1" value="{{ profile.default_street_address1 }}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="default_street_address2">Street Address 2</label>
-                            <input type="text" class="form-control" id="default_street_address2" name="default_street_address2" value="{{ profile.default_street_address2 }}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="default_town_or_city">Town or City</label>
-                            <input type="text" class="form-control" id="default_town_or_city" name="default_town_or_city" value="{{ profile.default_town_or_city }}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="default_postcode">Postcode</label>
-                            <input type="text" class="form-control" id="default_postcode" name="default_postcode" value="{{ profile.default_postcode }}">
-                        </div>
-
                         <div class="form-group">
                             <label for="default_country">Country</label>
-                            <select class="form-control" id="default_country" name="default_country">
-                                {% for country in profile.default_country.countries %}
-                                    <option value="{{ country.0 }}" {% if profile.default_country == country.0 %}selected{% endif %}>
-                                        {{ country.1 }}
-                                    </option>
-                                {% endfor %}
-                            </select>
+                            <input type="text" class="form-control" id="default_country" name="default_country" 
+                                   value="{{ user.userprofile.default_country }}">
                         </div>
-
+                        <div class="form-group">
+                            <label for="default_postcode">Postcode</label>
+                            <input type="text" class="form-control" id="default_postcode" name="default_postcode" 
+                                   value="{{ user.userprofile.default_postcode }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="default_street_address1">Street Address 1</label>
+                            <input type="text" class="form-control" id="default_street_address1" name="default_street_address1" 
+                                   value="{{ user.userprofile.default_street_address1 }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="default_street_address2">Street Address 2</label>
+                            <input type="text" class="form-control" id="default_street_address2" name="default_street_address2" 
+                                   value="{{ user.userprofile.default_street_address2 }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="default_town_or_city">Town or City</label>
+                            <input type="text" class="form-control" id="default_town_or_city" name="default_town_or_city" 
+                                   value="{{ user.userprofile.default_town_or_city }}">
+                        </div>
                         <div class="form-group">
                             <label for="default_county">County</label>
-                            <input type="text" class="form-control" id="default_county" name="default_county" value="{{ profile.default_county }}">
+                            <input type="text" class="form-control" id="default_county" name="default_county" 
+                                   value="{{ user.userprofile.default_county }}">
                         </div>
-
-                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                        <button type="submit" class="btn view-details-btn">Save Changes</button>
                     </form>
-                </div>
-            </div>
-
-            <div class="card shadow-sm mt-4">
-                <div class="card-header bg-primary text-white">
-                    Order History
-                </div>
-                <div class="card-body">
-                    {% if orders %}
-                        <ul class="list-group">
-                            {% for order in orders %}
-                                <li class="list-group-item">
-                                    Order #{{ order.order_number }} - 
-                                    {{ order.date|date:"d M Y" }} - 
-                                    ${{ order.grand_total }}
-                                    <a href="{% url 'order_detail' order.order_number %}" class="btn btn-link btn-sm float-right">View Details</a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        <p>You have no past orders.</p>
-                    {% endif %}
                 </div>
             </div>
         </div>

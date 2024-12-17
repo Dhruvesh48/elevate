@@ -1,0 +1,46 @@
+/* Profile Card */
+.profile-card {
+    border-color: #e0e0e0;
+}
+
+.profile-username {
+    color: #333333;
+}
+
+.profile-email {
+    font-size: 0.9rem;
+    color: #666666;
+}
+
+/* Quick Links Card */
+.quick-links-card {
+    border-color: #e0e0e0;
+}
+
+.quick-links-header {
+    background-color: #333333;
+    color: white;
+}
+
+.quick-links-list .quick-link-item {
+    font-size: 0.9rem;
+}
+
+.quick-links-list .quick-link-item a {
+    color: #333333;
+    text-decoration: none;
+}
+
+.quick-links-list .quick-link-item a:hover {
+    color: #ff9900;
+}
+
+/* Profile Details Card */
+.profile-details-card {
+    border-color: #e0e0e0;
+}
+
+.profile-details-header {
+    background-color: #333333;
+    color: white;
+}
